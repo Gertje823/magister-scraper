@@ -1,6 +1,7 @@
 import requests, json
 import asyncio
 from pyppeteer import launch
+from websockets import client
 
 base_url = 'BASE_URL.magister.net'
 username = 'YOUR_USERNAME'
@@ -68,19 +69,19 @@ for item in data['Items']:
     print("Downlading cijferlijst")
     req = requests.get(url, headers=headers).json()
     with open(f'Cijfers_{start}-{einde}.json', 'w') as f:
-        json.dump(req, f)
+        json.dump(req, f,indent=4)
 
     print("Downloading Rooster")
     r = requests.get(
         f"https://{base_url}/api/personen/{person_id}/afspraken?status=1&van={start}&tot={einde}",
         headers=headers).json()
     with open(f'Rooster_{start}-{einde}.json', 'w') as f:
-        json.dump(r, f)
+        json.dump(r, f,indent=4)
 
     print("Downloading Absenties")
     r = requests.get(
         f"https://{base_url}/api/personen/{person_id}/absenties?status=1&van={start}&tot={einde}",
         headers=headers).json()
     with open(f'Absenties_{start}-{einde}.json', 'w') as f:
-        json.dump(r, f)
+        json.dump(r, f, indent=4)
 
